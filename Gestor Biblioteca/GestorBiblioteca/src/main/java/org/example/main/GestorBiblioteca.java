@@ -1,7 +1,11 @@
 package org.example.main;
 
+import org.example.DAO.bibliotecario.BibliotecarioDAOImpl;
 import org.example.DAO.copia.CopiaDAOImpl;
+import org.example.DAO.persona.PersonaDAOImpl;
+import org.example.model.Bibliotecario;
 import org.example.model.Copia;
+import org.example.model.Persona;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,6 +16,8 @@ public class GestorBiblioteca
     private final static Scanner sc = new Scanner(System.in);
 
     private static CopiaDAOImpl copiaDAOImpl = new CopiaDAOImpl();
+    private static BibliotecarioDAOImpl bibliotecarioDAOImpl = new BibliotecarioDAOImpl();
+    private static PersonaDAOImpl personaDAOImpl = new PersonaDAOImpl();
 
     public static void main( String[] args ) {
 
@@ -22,6 +28,7 @@ public class GestorBiblioteca
         while ( !salir ) {
             menuPrincipal();
             int opcion = sc.nextInt();
+            sc.nextLine();
             switch (opcion) {
                 case 1:
                     crearCopia();
@@ -31,6 +38,11 @@ public class GestorBiblioteca
                     break;
                 case 3:
                     listarCopias();
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    crearBibliotecario();
                     break;
                 case 11:
                     System.out.println("Cerrando sesión.");
@@ -120,5 +132,38 @@ public class GestorBiblioteca
         for (Copia copia : copias){
             copia.mostrarDatos();
         }
+    }
+
+    public static void crearBibliotecario(){
+        System.out.println("Ingrese el DNI del bibliotecario.");
+        String dni = sc.nextLine();
+
+        if(!existePersona(dni)){
+            System.out.println("Ingrese el nombre del bibliotecario.");
+            String nombre = sc.nextLine();
+
+            System.out.println("Ingrese el puesto del bibliotecario.");
+            String puesto = sc.nextLine();
+
+            Bibliotecario bibliotecario = new Bibliotecario(dni, nombre, puesto);
+
+            if (bibliotecarioDAOImpl.add(bibliotecario)==2) {
+                System.out.println("Bibliotecario creado con éxito.");
+            } else {
+                System.out.println("Error al crear bibliotecario.");
+            }
+        } else {
+            System.out.println("Ya existe una persona en el sistema con ese DNI.");
+        }
+    }
+
+    public static boolean existePersona(String dni){
+        ArrayList<Persona> personas = personaDAOImpl.getAll();
+        for (Persona persona : personas){
+            if (persona.getDni().equals(dni)){
+                return true;
+            }
+        }
+        return false;
     }
 }
