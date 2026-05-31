@@ -23,14 +23,17 @@ public class Lector extends Persona implements Mostrable {
         this.copiasPrestadas = copiasPrestadas;
     }
 
-    public Lector(String dni, String nombre, LocalDate multaHasta) {
+    public Lector(String dni, String nombre) {
         super(dni, nombre);
-        this.multaHasta = multaHasta;
         this.copiasPrestadas = new ArrayList<>();
     }
 
     @Override
     public void mostrarDatos() {
         System.out.println("DNI: " + getDni() +  " Nombre: " + getNombre());
+    }
+
+    public void prestar(Copia copia) {
+        this.copiasPrestadas.add(copia);
     }
 }

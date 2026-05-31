@@ -2,9 +2,11 @@ package org.example.main;
 
 import org.example.DAO.bibliotecario.BibliotecarioDAOImpl;
 import org.example.DAO.copia.CopiaDAOImpl;
+import org.example.DAO.lector.LectorDAOImpl;
 import org.example.DAO.persona.PersonaDAOImpl;
 import org.example.model.Bibliotecario;
 import org.example.model.Copia;
+import org.example.model.Lector;
 import org.example.model.Persona;
 
 import java.util.ArrayList;
@@ -12,12 +14,13 @@ import java.util.Scanner;
 
 public class GestorBiblioteca
 {
-
+    //Por tiempo y para practicar otros enunciados hemos reducido el tamaño del programa y no hemos usado ninguna fecha en este.
     private final static Scanner sc = new Scanner(System.in);
 
     private static CopiaDAOImpl copiaDAOImpl = new CopiaDAOImpl();
     private static BibliotecarioDAOImpl bibliotecarioDAOImpl = new BibliotecarioDAOImpl();
     private static PersonaDAOImpl personaDAOImpl = new PersonaDAOImpl();
+    private static LectorDAOImpl lectorDAOImpl = new LectorDAOImpl();
 
     public static void main( String[] args ) {
 
@@ -40,6 +43,7 @@ public class GestorBiblioteca
                     listarCopias();
                     break;
                 case 4:
+                    prestarCopia();
                     break;
                 case 5:
                     crearBibliotecario();
@@ -49,6 +53,15 @@ public class GestorBiblioteca
                     break;
                 case 7:
                     listarBibliotecarios();
+                    break;
+                case 8:
+                    crearLector();
+                    break;
+                case 9:
+                    eliminarLector();
+                    break;
+                case 10:
+                    listarLectores();
                     break;
                 case 11:
                     System.out.println("Cerrando sesión.");
@@ -140,6 +153,34 @@ public class GestorBiblioteca
         }
     }
 
+    public static void prestarCopia(){
+        listarCopias();
+        System.out.println("Ingrese id de la copia.");
+        Copia copia = copiaDAOImpl.getById(sc.nextInt());
+
+        listarLectores();
+        System.out.println("Seleccione el DNI del lector.");
+        String dni = sc.nextLine();
+        if (existeLector(dni)){
+            Lector lector = lectorDAOImpl.getByDni(dni);
+
+            lector.prestar(copia);
+        } else {
+            System.out.println("No existe un lector con ese DNI.");
+        }
+    }
+
+    public static boolean existeLector(String dni){
+        ArrayList<Lector> lectores = lectorDAOImpl.getAll();
+
+        for (Lector lector : lectores){
+            if(lector.getDni().equals(dni)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static void crearBibliotecario(){
         System.out.println("Ingrese el DNI del bibliotecario.");
         String dni = sc.nextLine();
@@ -190,6 +231,41 @@ public class GestorBiblioteca
 
         for (Bibliotecario bibliotecario : bibliotecarios){
             bibliotecario.mostrarDatos();
+        }
+    }
+
+    public static void crearLector(){
+        System.out.println("Ingrese el DNI del lector.");
+        String dni  = sc.nextLine();
+        if (!existePersona(dni)){
+            System.out.println("Ingrese el nombre del lector.");
+            String nombre = sc.nextLine();
+
+            Lector lector = new Lector(dni, nombre);
+
+            if (lectorDAOImpl.add(lector) == 1) {
+                System.out.println("Lector creado con éxito.");
+            } else {
+                System.out.println("Error al crear al nuevo lector.");
+            }
+        }
+    }
+
+    public static void eliminarLector(){
+        listarLectores();
+        System.out.println("Ingrese el DNI del lector a eliminar.");
+        if (lectorDAOImpl.deleteByDni(sc.nextLine()) == 1){
+            System.out.println("Lector eliminado con exito.");
+        } else {
+            System.out.println("Error al eliminar lector.");
+        }
+    }
+
+    public static void listarLectores(){
+        ArrayList<Lector> lectores = lectorDAOImpl.getAll();
+
+        for (Lector lector : lectores){
+            lector.mostrarDatos();
         }
     }
 }

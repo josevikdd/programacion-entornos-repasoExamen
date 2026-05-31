@@ -80,4 +80,29 @@ public class CopiaDAOImpl implements CopiaDAO {
             return -1;
         }
     }
+
+    @Override
+    public Copia getById(int id) {
+        String sql = "SELECT FROM copia WHERE id_copia = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            String nombre = rs.getString("nombre_libro");
+            String tipo = rs.getString("tipo");
+            String editorial = rs.getString("editorial");
+            int ano = rs.getInt("anio");
+            String autor = rs.getString("autor");
+            String estado = rs.getString("estado");
+
+            Copia copia = new Copia(id, nombre, tipo, editorial, ano, autor, estado);
+            rs.close();
+            ps.close();
+            return copia;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
