@@ -65,4 +65,19 @@ public class CopiaDAOImpl implements CopiaDAO {
             return null;
         }
     }
+
+    @Override
+    public int deleteById(int id) {
+        String sql = "DELETE FROM copia WHERE id_copia = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            int i = ps.executeUpdate();
+            ps.close();
+            return i;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }

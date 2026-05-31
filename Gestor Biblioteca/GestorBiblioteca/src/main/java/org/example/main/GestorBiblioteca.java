@@ -26,6 +26,9 @@ public class GestorBiblioteca
                 case 1:
                     crearCopia();
                     break;
+                case 2:
+                    eliminarCopia();
+                    break;
                 case 3:
                     listarCopias();
                     break;
@@ -90,9 +93,24 @@ public class GestorBiblioteca
 
             Copia copia = new Copia(id, nombre, tipo, editorial, ano, autor, estado);
 
-            copiaDAOImpl.add(copia);
+            if (copiaDAOImpl.add(copia) == 1){
+                System.out.println("Copia creada con éxito.");
+            } else {
+                System.out.println("Error al crear la copia.");
+            }
         } else {
             System.out.println("Ya existe una copia con esa ID. Volviendo al menú principal.");
+        }
+    }
+
+    public static void eliminarCopia(){
+        listarCopias();
+        System.out.println("Ingrese id de la copia.");
+
+        if (copiaDAOImpl.deleteById(sc.nextInt()) == 1){
+            System.out.println("Copia eliminada con exito.");
+        } else {
+            System.out.println("No existe una copia con la ID ingresada.");
         }
     }
 

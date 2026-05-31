@@ -8,4 +8,5 @@ import java.util.ArrayList;
 public interface CopiaDAO extends IOperationsCRUD<Copia> {
     public int add (Copia object);
     public ArrayList<Copia> getAll();
+    public int deleteById(int id);
 }
