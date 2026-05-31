@@ -1,0 +1,12 @@
+La gestión de una biblioteca se hace desde una aplicación centralizada. Cumple los siguientes requisitos:
+1. Una biblioteca tiene copias de libros Estos últimos se caracterizan por su nombre, tipo
+(ingeniería, literatura, informática, etc.), editorial, año y autor.
+2. Los autores se caracterizan por su nombre, nacionalidad y fecha de nacimiento.
+3. Cada copia tiene un identificador. Puede estar en la biblioteca, prestada (en cuyo caso se debe identificar al lector que
+la tiene), con retraso o en reparación.
+4. Cada copia se presta un máximo de 30 días. Por cada día de retraso se impone una
+multa de dos días sin posibilidad de coger un nuevo libro.
+5. Los lectores de la biblioteca tomarán prestados los libros y se comprobará la fecha de
+los libros prestados. Tendrán un campo que indica la fecha hasta la cual tienen multa.
+6. Tanto los lectores como los bibliotecarios, que tienen un puesto asignado, se consideran personas en el sistema,
+compartiendo atributos como DNI y nombre.
