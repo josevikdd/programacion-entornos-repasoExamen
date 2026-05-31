@@ -10,7 +10,7 @@ public class ConexionBD {
     private static final String driver="com.mysql.cj.jdbc.Driver";
     private static final String user="root";
     private static final String pass="postgres";
-    private static final String url="jdbc:mysql://localhost:3306/gestionescolar";
+    private static final String url="jdbc:mysql://localhost:3306/gestorbiblioteca";
 
     // Cambiamos la visibilidad para controlar la construccion, tal como indica singleton
     private ConexionBD() {
