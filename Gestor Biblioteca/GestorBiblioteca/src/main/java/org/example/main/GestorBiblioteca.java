@@ -3,6 +3,7 @@ package org.example.main;
 import org.example.DAO.copia.CopiaDAOImpl;
 import org.example.model.Copia;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GestorBiblioteca
@@ -24,6 +25,9 @@ public class GestorBiblioteca
             switch (opcion) {
                 case 1:
                     crearCopia();
+                    break;
+                case 3:
+                    listarCopias();
                     break;
                 case 11:
                     System.out.println("Cerrando sesión.");
@@ -77,5 +81,13 @@ public class GestorBiblioteca
         Copia copia = new Copia(id, nombre, tipo, editorial, ano, autor, estado);
 
         copiaDAOImpl.add(copia);
+    }
+
+    public static void listarCopias(){
+        ArrayList<Copia> copias = copiaDAOImpl.getAll();
+
+        for (Copia copia : copias){
+            copia.mostrarDatos();
+        }
     }
 }

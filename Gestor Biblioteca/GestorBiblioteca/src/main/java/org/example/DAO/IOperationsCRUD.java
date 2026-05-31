@@ -1,6 +1,9 @@
 package org.example.DAO;
 
+import java.util.ArrayList;
+
 public interface IOperationsCRUD <T>{
 
     public int add (T object);
+    public ArrayList<T> getAll();
 }
