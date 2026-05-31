@@ -46,4 +46,19 @@ public class PersonaDAOImpl implements PersonaDAO {
     public int deleteById(int id) {
         return 0;
     }
+
+    @Override
+    public int deleteByDni(String dni) {
+        String sql = "DELETE FROM persona WHERE dni = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, dni);
+            int i = ps.executeUpdate();
+            ps.close();
+            return i;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }

@@ -7,4 +7,5 @@ import java.util.ArrayList;
 
 public interface PersonaDAO extends IOperationsCRUD<Persona> {
     public ArrayList<Persona> getAll();
+    public int deleteByDni(String dni);
 }

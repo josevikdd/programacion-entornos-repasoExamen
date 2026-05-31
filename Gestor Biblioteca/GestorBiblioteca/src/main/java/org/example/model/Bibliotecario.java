@@ -19,6 +19,6 @@ public class Bibliotecario extends Persona implements Mostrable {
 
     @Override
     public void mostrarDatos() {
-        System.out.println("DNI: " + getDni() +  " Nombre: " + getNombre());
+        System.out.println("DNI: " + getDni() +  " Nombre: " + getNombre() +  " Puesto: " + getPuesto());
     }
 }

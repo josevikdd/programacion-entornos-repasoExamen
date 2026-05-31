@@ -44,6 +44,12 @@ public class GestorBiblioteca
                 case 5:
                     crearBibliotecario();
                     break;
+                case 6:
+                    eliminarBibliotecario();
+                    break;
+                case 7:
+                    listarBibliotecarios();
+                    break;
                 case 11:
                     System.out.println("Cerrando sesión.");
                     salir = true;
@@ -165,5 +171,25 @@ public class GestorBiblioteca
             }
         }
         return false;
+    }
+
+    public static void eliminarBibliotecario(){
+        listarBibliotecarios();
+        System.out.println("Ingrese el DNI del bibliotecario a eliminar.");
+        String dni = sc.nextLine();
+
+        if ((bibliotecarioDAOImpl.deleteByDni(dni)==1)&&(personaDAOImpl.deleteByDni(dni)== 1)){
+            System.out.println("Bibliotecario eliminado con exito.");
+        } else {
+            System.out.println("Error al eliminar bibliotecario.");
+        }
+    }
+
+    public static void listarBibliotecarios(){
+        ArrayList<Bibliotecario> bibliotecarios = bibliotecarioDAOImpl.getAll();
+
+        for (Bibliotecario bibliotecario : bibliotecarios){
+            bibliotecario.mostrarDatos();
+        }
     }
 }
